@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+
+        var channel = "/chat"
+
+        var socket = io.connect('http://' + document.domain + ':' + location.port + channel);
+
+        socket.on('connect', function() {
+            socket.emit('my_connection', {data: 'I\'m connected!'});
+        });
+
+        socket.on("message", function (message) {
+            refreshMessages(message);
+        });
+
+        function refreshMessages(message) {
+            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div class="media-body">'
+                + message.message + '<br/><small class="text-muted">'
+                + message.author + ' | ' + message.createDate
+                + '</small><hr/></div></div></div></li>');
+        }
+
+        $(function(){
+            if (typeof $.cookie("bender-nickname") === 'undefined') {
+                window.location = "/login"
+            } else {
+                $("#sendMessage").on("click", function() {
+                    sendMessage()
+                });
+
+                $('#messageText').keyup(function(e){
+                    if(e.keyCode == 13)
+                    {
+                        sendMessage();
+                    }
+                });
+            }
+
+            function sendMessage() {
+                    $container = $('.media-list');
+                    $container[0].scrollTop = $container[0].scrollHeight;
+                    var message = $("#messageText").val();
+                    var author = $.cookie("bender-nickname");
+                    socket.emit('message', {data: {message: message, author: author}});
+                    $("#messageText").val("");
+                    $container.animate({ scrollTop: $container[0].scrollHeight }, "slow");
+            }
+        })
+    </script>
+</head>
+
+<div class="panel-body fixed-panel">
+    <ul class="media-list">
+    </ul>
+</div>
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Enter Message" id="messageText">
+    <span class="input-group-btn">
+        <button class="btn btn-info" type="button" id="sendMessage"> SEND </button>
+    </span>
+</div>
+</html>
