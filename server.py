@@ -1,3 +1,4 @@
+
 from gevent import monkey
 
 monkey.patch_all()
@@ -18,6 +19,7 @@ def chat():
 def login():
     return render_template('login.html')
 
+
 @socketio.on('message', namespace='/chat')
 def chat_message(message):
     print message['data']
@@ -29,4 +31,5 @@ def test_connect():
     emit('my response', {'data': 'Connected', 'count': 0})
 
 if __name__ == '__main__':
+    # manager.run()
     socketio.run(app)
