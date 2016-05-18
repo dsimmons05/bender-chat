@@ -1,5 +1,4 @@
 # manage.py
-
 from gevent import monkey
 
 monkey.patch_all()
@@ -18,7 +17,7 @@ from project import app, db
 from project.models import User
 
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object('project.config.DevelopmentConfig')
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -88,7 +87,6 @@ def test_connect():
 
 @manager.command
 def run():
-    print 'hi'
     socketio.run(app)
 
 if __name__ == '__main__':

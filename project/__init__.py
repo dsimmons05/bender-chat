@@ -21,7 +21,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object('project.config.DevelopmentConfig')
 
 ####################
 #### extensions ####
@@ -32,18 +32,18 @@ login_manager.init_app(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-
 ####################
 #### blueprints ####
 ####################
+def import_blueprints():
+    from project.main.views import main_blueprint
+    from project.user.views import user_blueprint
+    from project.chat.views import chat_blueprint
+    app.register_blueprint(main_blueprint)
+    app.register_blueprint(user_blueprint)
+    app.register_blueprint(chat_blueprint)
 
-from project.main.views import main_blueprint
-from project.user.views import user_blueprint
-from project.chat.views import chat_blueprint
-app.register_blueprint(main_blueprint)
-app.register_blueprint(user_blueprint)
-app.register_blueprint(chat_blueprint)
-
+import_blueprints()
 
 ####################
 #### flask-login ####
