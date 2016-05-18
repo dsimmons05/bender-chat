@@ -4,13 +4,13 @@
     <script>
         $(function(){
             if ($.cookie("bender-nickname")) {
-                window.location = "/"
+                window.location = "/chat"
             } else {
                 $("#frm-login").submit(function(event) {
                     event.preventDefault();
                     if ($("#nickname").val() !== '') {
                         $.cookie("bender-nickname", $("#nickname").val());
-                        window.location = "/";
+                        window.location = "/chat";
                     }
                 })
             }
@@ -20,7 +20,7 @@
 
 <html>
 <div class="jumbotron">
-  <h2 class="text-center"> Welcome to Bender </h2>
+  <h2 class="text-center"> Pick a chat nickname! </h2>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="icon" href="static/favicon.png" />
     <link rel="stylesheet" type="text/css" href="static/vendor/css/style.css" />
@@ -31,15 +31,10 @@
 <form role="form" id="frm-login" class="form-inline" style="text-align:center">
     <div class="input-group">
         <input class="form-control" placeholder="Enter Nickname" name="nickname" id="nickname" type="text"/>
-    </div>
-    <div class="input-group">
-        <input class="form-control" placeholder="Enter Password" name="password" id="password" type="password"/>
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit" button style="background-color:lightblue">Enter Chat</button>
         </span>
     </div>
-
-
 </form>
 
 

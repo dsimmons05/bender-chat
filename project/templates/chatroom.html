@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <title>Bender</title>
     <meta charset="UTF-8">
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -19,14 +18,14 @@
         });
 
         socket.on("message", function (message) {
+            console.log(message);
             refreshMessages(message);
         });
 
         function refreshMessages(message) {
-            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div class="media-body">'
-                + message.message + '<br/><small class="text-muted">'
-                + message.author + ' | ' + message.createDate
-                + '</small><hr/></div></div></div></li>');
+            $(".media-list").append(
+                '[' + message.data.author + '] '+ message.data.message
+                + '<br></br>');
         }
 
         $(function(){
@@ -56,13 +55,24 @@
             }
         })
     </script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <style type="text/css">
+        .fixed-panel {
+            min-height: 500px;
+            max-height: 500px;
+        }
+        .media-list {
+            overflow: auto;
+        }
+    </style>
 </head>
-
 
 <div class="panel-body fixed-panel">
     <ul class="media-list">
     </ul>
 </div>
+
 <div class="input-group">
     <input type="text" class="form-control" placeholder="Enter Message" id="messageText">
     <span class="input-group-btn">
@@ -70,9 +80,4 @@
     </span>
 </div>
 </html>
-
-
-
-
-
 
