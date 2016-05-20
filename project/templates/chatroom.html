@@ -32,7 +32,8 @@
         });
 
         socket.on('load_msgs', function (message) {
-             $(".media-list").append(message['msg']);
+             console.log(message)
+             $(".media-list").append(message['msg']['data']);
         });
 
 

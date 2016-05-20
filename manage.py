@@ -16,6 +16,8 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from project import app, db
 from project.models import User
 
+import requests
+
 
 app.config.from_object('project.config.DevelopmentConfig')
 
@@ -76,17 +78,25 @@ def create_admin():
 
 @socketio.on('message', namespace='/chat')
 def chat_message(message):
+
     print message['data']
 
     emit('message', {'data': message['data']}, broadcast=True)
+
     data = message['data']
-    with open('project/templates/messages.txt', 'a') as f:
-        f.write('[' + data['message'] + '] ' + data['author'] + '<br></br>')
+    ip = 'http://104.236.244.227:8080'
+    msgs = requests.get(ip + '/data/chat').json()
+    messages = msgs['data']
+    messages += '[' + data['message'] + '] ' + data['author'] + '<br></br>'
+    r = requests.post(ip + '/data', json = {'key':'chat', 'data':messages})
+    print r.text
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    f = open('project/templates/messages.txt')
-    msgs = f.read()
+    ip = 'http://104.236.244.227:8080'
+
+    msgs = requests.get(ip + '/data/chat').json()
+
     emit('load_msgs', {'msg': msgs}, broadcast=False)
 
 @manager.command
