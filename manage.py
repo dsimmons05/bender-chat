@@ -28,7 +28,7 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 socketio = SocketIO(app)
 
-ip = 'localhost'
+ip = '104.236.244.227'
 
 
 @manager.command
@@ -89,7 +89,7 @@ def chat_message(message):
     url = 'http://' + ip + ':8080'
     msgs = requests.get(url + '/data/chat').json()
     messages = msgs['data']
-    messages += '[' + data['message'] + '] ' + data['author'] + '<br></br>'
+    messages += '[' + data['author'] + '] ' + data['message'] + '<br>'
     r = requests.post(url + '/data', json = {'key':'chat', 'data':messages})
     print r.text
 
@@ -107,5 +107,5 @@ def run():
 
 if __name__ == '__main__':
     url = 'http://' + ip + ':8080'
-    requests.post(url + '/data', json = {'key':'chat', 'data':'<br></br>'})
+    requests.post(url + '/data', json = {'key':'chat', 'data':'<br>'})
     manager.run()

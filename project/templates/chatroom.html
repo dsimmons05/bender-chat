@@ -40,7 +40,7 @@
         function refreshMessages(message) {
             $(".media-list").append(
                 '[' + message.data.author + '] '+ message.data.message
-                + '<br></br>');
+                + '<br>');
         }
 
         $(function(){
@@ -133,7 +133,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-info">
                             <div id="panel" class="panel-body fixed-panel">
-                                    <ul id="chatbox" class="media-list" style="overflow-y:hidden; height:500px;">
+                                    <ul id="chatbox" class="media-list" style="overflow-y:scroll; height:500px;">
                                     </ul>
                             </div>
 
