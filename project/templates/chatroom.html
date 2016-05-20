@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    <link href="chatroom.css" rel="stylesheet" media="screen">
     <meta charset="UTF-8">
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -67,12 +68,12 @@
                     socket.emit('message', {data: {message: message, author: author}});
                     $("#messageText").val("");
                     $container.animate({ scrollTop: $container[0].scrollHeight }, "slow");
-                    
             }
         })
     </script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="chatroom.css">
     <style type="text/css">
         .fixed-panel {
             min-height: 500px;
@@ -84,16 +85,61 @@
     </style>
 </head>
 
-<div class="panel-body fixed-panel">
-    <ul class="media-list">
-    </ul>
-</div>
 
-<div class="input-group">
-    <input type="text" class="form-control" placeholder="Enter Message" id="messageText">
-    <span class="input-group-btn">
-        <button class="btn btn-info" type="button" id="sendMessage"> SEND </button>
-    </span>
-</div>
+<!-- <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Python Websockets Chat Demo</h1>
+        <hr />
+      </div>
+      <form id="input-form" class="form-inline">
+        <div class="form-group">
+          <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
+        </div>
+        <div class="form-group">
+          <input id="input-text" type="text" class="form-control" placeholder="Enter chat text here!" autofocus />
+        </div>
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+      <div class="page-header">
+        <h1>Chat Log</h1>
+      </div>
+      <div id="chat-text">
+      </div>
+    </div>
+
+
+    <script type="text/javascript" src="static/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="static/js/reconnecting-websocket.min.js"></script>
+    <script type="text/javascript" src="static/js/application.js"></script>
+  </body> -->
+<body>
+    <div id="body">
+        <div id="chatbox" class="container">
+            <div class="row " style="padding-top:35px;">
+                <div class="col-md-12">
+                    <div class="panel panel-info">
+                            <div id="panel" class="panel-body fixed-panel" style="overflow-y: scroll; height:400px;">
+                                    <ul id="chatbox" class="media-list">
+                                    </ul>
+                            </div>
+
+                        <div class="panel-footer">
+                              <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter Message" id="messageText">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button" id="sendMessage"> SEND </button>
+                                    </span>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
 </html>
 

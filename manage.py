@@ -28,6 +28,8 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 socketio = SocketIO(app)
 
+ip = 'localhost'
+
 
 @manager.command
 def test():
@@ -84,18 +86,18 @@ def chat_message(message):
     emit('message', {'data': message['data']}, broadcast=True)
 
     data = message['data']
-    ip = 'http://104.236.244.227:8080'
-    msgs = requests.get(ip + '/data/chat').json()
+    url = 'http://' + ip + ':8080'
+    msgs = requests.get(url + '/data/chat').json()
     messages = msgs['data']
     messages += '[' + data['message'] + '] ' + data['author'] + '<br></br>'
-    r = requests.post(ip + '/data', json = {'key':'chat', 'data':messages})
+    r = requests.post(url + '/data', json = {'key':'chat', 'data':messages})
     print r.text
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    ip = 'http://104.236.244.227:8080'
+    url = 'http://' + ip + ':8080'
 
-    msgs = requests.get(ip + '/data/chat').json()
+    msgs = requests.get(url + '/data/chat').json()
 
     emit('load_msgs', {'msg': msgs}, broadcast=False)
 
@@ -104,4 +106,6 @@ def run():
     socketio.run(app, host='0.0.0.0')
 
 if __name__ == '__main__':
+    url = 'http://' + ip + ':8080'
+    requests.post(url + '/data', json = {'key':'chat', 'data':'<br></br>'})
     manager.run()
