@@ -77,16 +77,17 @@ def create_admin():
 @socketio.on('message', namespace='/chat')
 def chat_message(message):
     print message['data']
-    emit('message', {'data': message['data']}, broadcast = True)
+
+    emit('message', {'data': message['data']}, broadcast=True)
+    data = message['data']
+    with open('project/templates/messages.txt', 'a') as f:
+        f.write('[' + data['message'] + '] ' + data['author'] + '<br></br>')
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    print "got a connection!"
-    emit('my response', {'data': 'Connected', 'count': 0})
-
-def test_emit():
-    print "emitting message!"
-    emit()
+    f = open('project/templates/messages.txt')
+    msgs = f.read()
+    emit('load_msgs', {'msg': msgs}, broadcast=False)
 
 @manager.command
 def run():

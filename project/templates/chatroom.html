@@ -13,9 +13,9 @@
 
         var socket = io.connect('http://' + document.domain + ':' + location.port + channel);
 
-        var lineReader = require('readline').createInterface({
-          input: require('fs').createReadStream('messages.txt')
-        });
+        // var lineReader = require('readline').createInterface({
+        //   input: require('fs').createReadStream('messages.txt')
+        // });
 
         socket.on('connect', function() {
             socket.emit('my_connection', {data: 'I\'m connected!'});
@@ -31,9 +31,10 @@
             refreshMessages(message);
         });
 
-        function addInitialMessages(message) {
-            $(".media-list").append(message);
-        }
+        socket.on('load_msgs', function (message) {
+             $(".media-list").append(message['msg']);
+        });
+
 
         function refreshMessages(message) {
             $(".media-list").append(
@@ -65,14 +66,7 @@
                     socket.emit('message', {data: {message: message, author: author}});
                     $("#messageText").val("");
                     $container.animate({ scrollTop: $container[0].scrollHeight }, "slow");
-                    // writeToFile(author, message);
-            }
-
-            function writeToFile(a, m) {
-                var     fso = new ActiveXObject("Scripting.FileSystemObject");
-                var     fh  = fso.OpenTextFile("messages.txt");
-                fh.WriteLine('[' + a + '] ' + m + "\r\n" + '<br></br>');
-                fh.Close();
+                    
             }
         })
     </script>
