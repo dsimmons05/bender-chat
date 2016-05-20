@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <link href="chatroom.css" rel="stylesheet" media="screen">
     <meta charset="UTF-8">
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -56,6 +55,11 @@
                     if(e.keyCode == 13)
                     {
                         sendMessage();
+                    var chatbox = document.getElementById("chatbox");
+                    // allow 1px inaccuracy by adding 1
+                    var isScrolledToBottom = chatbox.scrollHeight - chatbox.clientHeight <= chatbox.scrollTop + 1;
+                    if(isScrolledToBottom)
+                    chatbox.scrollTop = chatbox.scrollHeight - chatbox.clientHeight;
                     }
                 });
             }
@@ -81,6 +85,15 @@
         }
         .media-list {
             overflow: auto;
+        }
+        #body {
+            width:100%;
+            height:100%;
+            position:fixed;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
         }
     </style>
 </head>
@@ -119,8 +132,8 @@
             <div class="row " style="padding-top:35px;">
                 <div class="col-md-12">
                     <div class="panel panel-info">
-                            <div id="panel" class="panel-body fixed-panel" style="overflow-y: scroll; height:400px;">
-                                    <ul id="chatbox" class="media-list">
+                            <div id="panel" class="panel-body fixed-panel">
+                                    <ul id="chatbox" class="media-list" style="overflow-y:hidden; height:500px;">
                                     </ul>
                             </div>
 
