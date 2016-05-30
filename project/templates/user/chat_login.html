@@ -1,0 +1,41 @@
+<head>
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        $(function(){
+            if ($.cookie("bender-nickname")) {
+                window.location = "/chat"
+            } else {
+                $("#frm-login").submit(function(event) {
+                    event.preventDefault();
+                    if ($("#nickname").val() !== '') {
+                        $.cookie("bender-nickname", $("#nickname").val());
+                        window.location = "/chat";
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<html>
+<div class="jumbotron">
+  <h2 class="text-center"> Pick a chat nickname! </h2>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="icon" href="static/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="static/vendor/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="static/vendor/fontawesome/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="static/vendor/css/toastr.min.css"/>
+</div>
+
+<form role="form" id="frm-login" class="form-inline" style="text-align:center">
+    <div class="input-group">
+        <input class="form-control" placeholder="Enter Nickname" name="nickname" id="nickname" type="text"/>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" button style="background-color:lightblue">Enter Chat</button>
+        </span>
+    </div>
+</form>
+
+
+</html>
