@@ -82,30 +82,16 @@ def create_admin():
 def chat_message(message):
 
     print message['data']
-
-    emit('message', {'data': message['data']}, broadcast=True)
-
-    data = message['data']
-    url = 'http://' + ip + ':8080'
-    msgs = requests.get(url + '/data/chat').json()
-    messages = msgs['data']
-    messages += '[' + data['author'] + '] ' + data['message'] + '<br>'
-    r = requests.post(url + '/data', json = {'key':'chat', 'data':messages})
-    print r.text
+    emit('message', {'data': message['data']}, broadcast = True)
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
-    url = 'http://' + ip + ':8080'
-
-    msgs = requests.get(url + '/data/chat').json()
-
-    emit('load_msgs', {'msg': msgs}, broadcast=False)
+     print "got a connection!"
+     emit('my response', {'data': 'Connected', 'count': 0})
 
 @manager.command
 def run():
-    socketio.run(app, host='0.0.0.0')
+    socketio.run(app)
 
 if __name__ == '__main__':
-    url = 'http://' + ip + ':8080'
-    requests.post(url + '/data', json = {'key':'chat', 'data':'<br>'})
     manager.run()
