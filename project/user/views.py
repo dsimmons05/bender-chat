@@ -52,6 +52,7 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
+        # We can find the user and the password matches its hashed value
         if user and bcrypt.check_password_hash(
                 user.password, request.form['password']):
             login_user(user)
