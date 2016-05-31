@@ -13,7 +13,7 @@ from flask.ext.login import login_user, logout_user, \
 from project.models import User
 # from project.email import send_email
 from project import db, bcrypt
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, ChangePasswordForm
 
 
 ################
@@ -62,6 +62,23 @@ def login():
             flash('Invalid username and/or password.', 'danger')
             return render_template('user/login.html', form=form)
     return render_template('user/login.html', form=form)
+
+@user_blueprint.route('/change_pswd', methods=['GET', 'POST'])
+def change_pswd():
+    form = ChangePasswordForm(request.form)
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(
+                user.password, request.form['password']):
+            user.password = request.form['new']
+            login_user(user)
+            flash('Welcome.', 'success')
+            return render_template('user/chat_login.html')
+        else:
+            flash('Invalid password or passwords do not match.', 'danger')
+            return render_template('user/change_pswd.html', form=form)
+    return render_template('user/change_pswd.html', form=form)
+
 
 @user_blueprint.route('/chat_login')
 def chat_login():
