@@ -1,10 +1,4 @@
 # project/__init__.py
-
-
-#################
-#### imports ####
-#################
-
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -14,27 +8,17 @@ from flask.ext.bcrypt import Bcrypt
 from flask_mail import Mail
 from flask.ext.sqlalchemy import SQLAlchemy
 
-
-################
 #### config ####
-################
-
 app = Flask(__name__)
 
 app.config.from_object('project.config.DevelopmentConfig')
-
-####################
-#### extensions ####
-####################
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-####################
-#### blueprints ####
-####################
+
 def import_blueprints():
     from project.main.views import main_blueprint
     from project.user.views import user_blueprint
@@ -44,10 +28,6 @@ def import_blueprints():
     app.register_blueprint(chat_blueprint)
 
 import_blueprints()
-
-####################
-#### flask-login ####
-####################
 
 from project.models import User
 
@@ -59,10 +39,6 @@ login_manager.login_message_category = "danger"
 def load_user(user_id):
     return User.query.filter(User.id == int(user_id)).first()
 
-
-########################
-#### error handlers ####
-########################
 
 @app.errorhandler(403)
 def forbidden_page(error):

@@ -1,8 +1,5 @@
 # project/util.py
-
-
 from flask.ext.testing import TestCase
-
 from project import app, db
 from project.models import User
 

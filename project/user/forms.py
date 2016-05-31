@@ -1,6 +1,4 @@
 # project/user/forms.py
-
-
 from flask_wtf import Form
 from wtforms import fields, validators, TextField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, EqualTo

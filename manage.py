@@ -6,18 +6,13 @@ monkey.patch_all()
 import os
 import unittest
 import coverage
-
 from flask import session
 from flask.ext.socketio import SocketIO, emit, join_room
-
 from flask.ext.script import Manager, Server
 from flask.ext.migrate import Migrate, MigrateCommand
-
 from project import app, db
 from project.models import User
-
 import requests
-
 
 app.config.from_object('project.config.DevelopmentConfig')
 
@@ -30,7 +25,6 @@ socketio = SocketIO(app)
 
 ip = '104.236.244.227'
 
-
 @manager.command
 def test():
     """Runs the unit tests without coverage."""
@@ -40,7 +34,6 @@ def test():
         return 0
     else:
         return 1
-
 
 @manager.command
 def cov():
@@ -59,18 +52,15 @@ def cov():
     print('HTML version: file://%s/index.html' % covdir)
     cov.erase()
 
-
 @manager.command
 def create_db():
     """Creates the db tables."""
     db.create_all()
 
-
 @manager.command
 def drop_db():
     """Drops the db tables."""
     db.drop_all()
-
 
 @manager.command
 def create_admin():
