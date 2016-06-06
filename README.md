@@ -1,4 +1,8 @@
 # bender-chat
+
+## Usage
+
+```
 To set up database: <br />
 python manage.py create_db <br />
 python manage.py db init <br />
