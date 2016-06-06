@@ -3,16 +3,16 @@
 ## Usage
 
 ```
-To set up database: <br />
-python manage.py create_db <br />
-python manage.py db init <br />
-python manage.py db migrate <br />
+To set up database: 
+python manage.py create_db 
+python manage.py db init 
+python manage.py db migrate 
 
-To set up virtual environment and install necessary requirements: <br />
-virtualenv "name" <br />
-source "name"/bin/activate <br />
-pip install -r requirements.txt <br />
+To set up virtual environment and install necessary requirements:
+virtualenv "name" 
+source "name"/bin/activate
+pip install -r requirements.txt 
 
-To run: <br />
-python manage.py run <br />
+To run the chat server: 
+python manage.py run 
 
